@@ -1,0 +1,206 @@
+/* ========== Base ========== */
+:root{
+  --bg-deep:#0a0f1f;
+  --bg-mid:#0e1530;
+  --ink:#eaf6ff;
+  --ink-dim:#b9c9e6;
+  --accent:#56d6ff;     /* HSRっぽいサイバーブルー */
+  --accent-2:#ffd166;   /* ゴールド差し色 */
+  --glass:rgba(255,255,255,0.08);
+  --blur:12px;
+  --radius:18px;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--bg-deep),var(--bg-mid) 60%, #0b0f1e);
+  font-family:"Outfit","Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  line-height:1.75;
+}
+
+/* ========== Parallax Space Background ========== */
+.bg-space{
+  position:fixed; inset:0; z-index:-3;
+  background:
+    radial-gradient(1px 1px at 10% 20%, #ffffff66 0 1px, transparent 2px),
+    radial-gradient(1px 1px at 30% 80%, #aee7ff55 0 1px, transparent 2px),
+    radial-gradient(1px 1px at 70% 30%, #ffffff66 0 1px, transparent 2px),
+    radial-gradient(1px 1px at 90% 60%, #aee7ff55 0 1px, transparent 2px),
+    radial-gradient(2px 2px at 50% 50%, #fff 0 2px, transparent 3px);
+  opacity:.35;
+  animation: drift 90s linear infinite;
+}
+.bg-space.layer-2{ z-index:-4; opacity:.25; filter:blur(0.3px); animation-duration:140s}
+.bg-space.layer-3{ z-index:-5; opacity:.18; filter:blur(0.6px); animation-duration:200s}
+
+@keyframes drift{
+  0%{background-position:0 0,0 0,0 0,0 0,0 0}
+  100%{background-position:6000px 0, -4000px 0, 3000px 0, -2500px 0, 1500px 0}
+}
+
+/* ========== Header/Nav ========== */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:saturate(140%) blur(8px);
+  background:linear-gradient(180deg, rgba(7,10,24,.65), rgba(7,10,24,.35));
+  border-bottom:1px solid #ffffff15;
+}
+.brand{
+  display:flex; align-items:center; gap:.6rem;
+  padding:12px 18px; font-weight:700; letter-spacing:.03em;
+}
+.brand .logo{
+  display:inline-grid; place-items:center;
+  width:28px; height:28px; border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, var(--accent), #2bb5ff 60%, transparent 61%);
+  color:#00121b; text-shadow:0 0 8px #fff8;
+  box-shadow:0 0 28px #2bb5ff55 inset, 0 0 16px #2bb5ff66;
+  animation: pulse 3.2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1); box-shadow:0 0 22px #2bb5ff44 inset, 0 0 12px #2bb5ff55}
+  50%{transform:scale(1.06); box-shadow:0 0 34px #2bb5ff66 inset, 0 0 22px #2bb5ff88}
+}
+.nav{
+  display:flex; flex-wrap:wrap; gap:8px 4px;
+  padding:0 18px 14px;
+}
+.nav-link{
+  color:var(--ink-dim); text-decoration:none; font-size:.95rem;
+  padding:8px 12px; border-radius:999px; border:1px solid #ffffff14;
+  transition:.25s;
+}
+.nav-link:hover{ color:var(--ink); border-color:#ffffff33; box-shadow:0 6px 18px #0005; transform:translateY(-2px)}
+
+/* ========== Hero ========== */
+.hero{
+  position:relative; display:grid; place-items:center;
+  min-height:62vh; padding:6rem 1rem 3rem;
+  overflow:hidden;
+}
+.hero-inner{ text-align:center; max-width:1000px; padding:0 1rem}
+.title{
+  font-size:clamp(1.6rem, 3vw + 1rem, 3rem);
+  margin:0 0 .4rem; letter-spacing:.02em; font-weight:800;
+}
+.glow{
+  text-shadow:
+    0 0 10px #56d6ff55,
+    0 0 22px #56d6ff55,
+    0 0 34px #56d6ff33;
+}
+.subtitle{ color:var(--ink-dim); margin:.25rem 0 1.2rem}
+.cta{ display:flex; gap:12px; justify-content:center}
+.btn{
+  display:inline-block; padding:12px 18px; border-radius:14px;
+  text-decoration:none; color:var(--ink);
+  border:1px solid #ffffff22; transition:.25s; box-shadow:var(--shadow);
+  backdrop-filter: blur(var(--blur));
+  background: linear-gradient(180deg, #ffffff12, #ffffff06);
+}
+.btn.primary{
+  border-color:#2bb5ff55;
+  box-shadow:0 0 0 2px #2bb5ff22 inset, 0 12px 30px #2bb5ff22;
+}
+.btn.ghost{ background:transparent }
+.btn.small{ padding:8px 12px; font-size:.9rem }
+.btn:hover{ transform:translateY(-2px); border-color:#ffffff55 }
+
+/* 銀河鉄道のエフェクト（走行アニメ） */
+.rail{ position:relative; height:6px; margin:2rem auto 0; width:min(720px, 90vw);
+  background:linear-gradient(90deg, transparent, #ffffff22 20%, #ffffff22 80%, transparent);
+  border-radius:999px; overflow:visible; filter:drop-shadow(0 0 8px #56d6ff66);
+}
+.car{
+  position:absolute; top:-10px; width:34px; height:26px; border-radius:8px;
+  background:linear-gradient(180deg, #71e0ff, #2bb5ff);
+  box-shadow:0 0 14px #56d6ff, 0 0 30px #56d6ff;
+  animation: ride 7.5s linear infinite;
+}
+.car:nth-child(2){ animation-delay: -2.5s; opacity:.7; transform:scale(.9)}
+.car:nth-child(3){ animation-delay: -5s;   opacity:.5; transform:scale(.8)}
+@keyframes ride{
+  0%{ left:-40px }
+  100%{ left: calc(100% + 40px) }
+}
+
+/* ========== Layout ========== */
+.container{
+  width:min(1100px, 92vw); margin: 0 auto 8rem; padding: 0 0.5rem;
+}
+.card{
+  background: linear-gradient(180deg, #ffffff10, #ffffff07);
+  border:1px solid #ffffff1c;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 2.5vw, 28px);
+  margin: 1.2rem 0;
+  backdrop-filter: blur(var(--blur));
+}
+.card h2{
+  margin:0 0 .6rem; font-size: clamp(1.15rem, 1.2rem + .8vw, 1.8rem);
+  border-left:4px solid var(--accent); padding-left:.6rem;
+  text-shadow: 0 0 12px #56d6ff44;
+}
+.grid{
+  display:grid; gap:16px;
+}
+.grid.two{ grid-template-columns: repeat(2, minmax(0,1fr)) }
+.grid.three{ grid-template-columns: repeat(3, minmax(0,1fr)) }
+.grid.four{ grid-template-columns: repeat(4, minmax(0,1fr)) }
+@media (max-width:960px){
+  .grid.two,.grid.three,.grid.four{ grid-template-columns: 1fr }
+}
+
+.kv{ margin:0; padding-left:1.1rem }
+.kv li{ margin:.2rem 0 }
+.note{
+  padding:14px; border:1px dashed #ffffff2e; border-radius:14px; color:var(--ink-dim);
+}
+
+/* ========== Components ========== */
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:.6rem}
+.chip{
+  padding:6px 10px; border-radius:999px; border:1px solid #ffffff24; font-size:.9rem;
+  background:linear-gradient(180deg, #ffffff12, #ffffff05);
+}
+.char, .feat, .pill{
+  padding:14px; border-radius:12px; border:1px solid #ffffff19;
+  background:linear-gradient(180deg, #ffffff0f, #ffffff06);
+}
+.char h3{ margin:.2rem 0 .4rem; font-size:1.05rem }
+.feat h4,.pill h4{ margin:.2rem 0 .2rem; font-size:1rem; color:#eaf6ff }
+
+.to-top{ text-align:center; margin-top:1rem }
+
+/* ========== Reveal Animations ========== */
+.reveal{ opacity:0; transform: translateY(18px); animation: reveal-up .9s ease forwards }
+.reveal:nth-of-type(1){ animation-delay: .05s }
+.reveal:nth-of-type(2){ animation-delay: .12s }
+.reveal:nth-of-type(3){ animation-delay: .18s }
+@keyframes reveal-up{
+  to{ opacity:1; transform:none }
+}
+
+/* ========== Footer ========== */
+.site-footer{
+  text-align:center; color:var(--ink-dim);
+  padding: 28px 12px 48px; border-top:1px solid #ffffff15;
+}
+
+/* ========== Accessibility / Small Polish ========== */
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:6px }
+a{ color:var(--accent) }
+a:hover{ color:#96e7ff }
+
+/* ========== Easter / Accent ========== */
+.title::after{
+  content:""; display:block; height:2px; width:120px; margin:.7rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  filter:drop-shadow(0 0 10px #56d6ff88);
+}
